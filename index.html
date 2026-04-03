@@ -1,0 +1,229 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>ALGO LINDO💖</title>
+
+  <style>
+    body, html {
+      margin: 0;
+      padding: 0;
+      overflow-x: hidden;
+      font-family: 'Segoe UI', sans-serif;
+      background-color: #000;
+    }
+
+    canvas {
+      position: fixed;
+      top: 0;
+      left: 0;
+      z-index: -1;
+    }
+
+    .pantalla {
+      display: none;
+      text-align: center;
+      padding: 50px 20px;
+      color: white;
+      position: relative;
+    }
+
+    .visible {
+      display: block;
+    }
+
+    h1 {
+      color: #246aac;
+    }
+
+    img, video {
+      width: 300px;
+      margin: 10px;
+      border-radius: 20px;
+      box-shadow: 0 4px 8px rgba(4, 203, 218, 0.2);
+      cursor: pointer;
+      transition: transform 0.2s ease;
+    }
+
+    img:hover, video:hover {
+      transform: scale(1.05);
+    }
+
+    button {
+      margin: 20px;
+      padding: 15px 30px;
+      background-color: #154c8a;
+      border: none;
+      border-radius: 10px;
+      color: white;
+      font-size: 18px;
+      cursor: pointer;
+    }
+
+    button:hover {
+      background-color: #2056a7;
+    }
+
+    #pantallaPrincipal {
+      background-color: #ffe6f0;
+      color: black;
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- Fondo estrellas -->
+  <canvas id="canvasEstrellas"></canvas>
+
+  <!-- Pantalla inicio -->
+  <div id="pantallaInicio" class="pantalla visible">
+    <h1>BUENAAAS CIELITO, ¿ EMPEZAMOS ?</h1>
+    <p>PRESIONA INICIO 🤍 </p>
+
+    <img src="https://i.redd.it/58radj9pxfc81.gif"
+         style="width:200px; border-radius:20px; box-shadow:0 0 20px rgb(14,152,161);">
+
+    <br>
+    <button onclick="mostrarPantallaPrincipal()">Inicio</button>
+  </div>
+
+  <!-- Pantalla principal -->
+  <div id="pantallaPrincipal" class="pantalla">
+    <h1>Mi cielo a veces las palabras me faltan pero...</h1>
+    <p>PULSE EN CADA IMAGEN </p>
+
+    <!-- Imagen 1 -->
+    <img src="imagen1.jpeg" onclick="reproducirCancion('cancion1')">
+
+    <!-- Imagen 2 -->
+    <img src="imagen2.jpeg" onclick="window.open('index3.html','_blank')">
+
+    <!-- Imagen 3 -->
+    <img src="imagen3.jpeg" onclick="window.open('index4.html','_blank')">
+
+
+    <!-- Video -->
+    <video src="video1.mp4" autoplay loop muted playsinline
+      onclick="toggleVideoYAudio('cancion2', this)">
+    </video>
+
+    <!-- Imagen extra -->
+    <img src="imagen5.jpeg"
+      onclick="alert('¡microcarta! Soy bastante torpe para muchas cosas pero no imbecil para perderte de una manera tan mensa no puedo cambiar lo ya hecho pero si mejorarlo,mejorar y ser el mejor hombre para ti mi cielo.🥰')">
+
+    <!-- Botón -->
+    <div>
+      <button onclick="window.open('index2.html','_blank')"
+        style="background:white; color:#ff66a3; border-radius:50px;">
+        ❤️ CARTA
+      </button>
+    </div>
+  </div>
+
+  <!-- Audios -->
+  <audio id="cancion1" src="cancion1.mp3"></audio>
+  <audio id="cancion2" src="cancion2.mp3"></audio>
+
+  <!-- SCRIPT -->
+  <script>
+
+    function mostrarPantallaPrincipal() {
+      document.getElementById("pantallaInicio").classList.remove("visible");
+      document.getElementById("pantallaPrincipal").classList.add("visible");
+      document.getElementById("canvasEstrellas").style.display = "none";
+    }
+
+    function reproducirCancion(id) {
+      let c1 = document.getElementById('cancion1');
+      let c2 = document.getElementById('cancion2');
+      let actual = document.getElementById(id);
+
+      if (!actual.paused) {
+        actual.pause();
+        return;
+      }
+
+      c1.pause(); c1.currentTime = 0;
+      c2.pause(); c2.currentTime = 0;
+
+      actual.play();
+    }
+
+    function toggleVideoYAudio(id, video) {
+      let audio = document.getElementById(id);
+
+      if (!audio.paused) {
+        audio.pause();
+        video.pause();
+        return;
+      }
+
+      document.getElementById('cancion1').pause();
+      document.getElementById('cancion1').currentTime = 0;
+
+      document.getElementById('cancion2').pause();
+      document.getElementById('cancion2').currentTime = 0;
+
+      audio.play();
+      video.play();
+    }
+
+    // ⭐ ESTRELLAS ⭐
+    const canvas = document.getElementById('canvasEstrellas');
+    const ctx = canvas.getContext('2d');
+
+    let estrellas = [];
+    const cantidad = 100;
+
+    function ajustarTamaño() {
+      canvas.width = window.innerWidth;
+      canvas.height = window.innerHeight;
+    }
+
+    window.addEventListener('resize', ajustarTamaño);
+    ajustarTamaño();
+
+    for (let i = 0; i < cantidad; i++) {
+      estrellas.push({
+        x: Math.random() * canvas.width,
+        y: Math.random() * canvas.height,
+        r: Math.random() * 1.5 + 0.5,
+        d: Math.random()
+      });
+    }
+
+    function dibujarEstrellas() {
+      ctx.clearRect(0, 0, canvas.width, canvas.height);
+      ctx.fillStyle = "white";
+
+      estrellas.forEach(e => {
+        ctx.beginPath();
+        ctx.arc(e.x, e.y, e.r, 0, Math.PI * 2);
+        ctx.fill();
+      });
+
+      mover();
+    }
+
+    function mover() {
+      estrellas.forEach(e => {
+        e.y += e.d;
+        if (e.y > canvas.height) {
+          e.y = 0;
+          e.x = Math.random() * canvas.width;
+        }
+      });
+    }
+
+    function animar() {
+      dibujarEstrellas();
+      requestAnimationFrame(animar);
+    }
+
+    animar();
+
+  </script>
+
+</body>
+</html>

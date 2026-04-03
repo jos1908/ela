@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>ROSAELA</title>
+  <link rel="stylesheet" href="./style.css">
+</head>
+
+<body>
+
+  <div class="titulo">
+    <h1>DESEO QUE CUALQUIER SENTIMIENTO BONITO QUE PODAMOS SENTIR 
+    EL UNO POR EL OTRO 🤍</h1>
+    <h2>
+      SEA ETERNO COMO ESTA ROSA 🌹
+    </h2>
+  </div>
+
+  <div class="container">
+    <div class="glass">
+      <div class="shine"></div>
+    </div>
+
+    <div class="thorns">
+      <div></div><div></div><div></div><div></div>
+    </div>
+
+    <div class="leaves">
+      <div></div><div></div><div></div><div></div>
+    </div>
+
+    <div class="petals">
+      <div></div><div></div><div></div><div></div>
+      <div></div><div></div><div></div>
+    </div>
+
+    <div class="deadPetals">
+      <div></div><div></div><div></div><div></div>
+    </div>
+  </div>
+
+  <!-- 🎵 Audios -->
+  <audio id="audioAcepto" src="MUSIC.mp3"></audio>
+  <audio id="audioNegado" src="sonido.mp3"></audio>
+
+  <!-- 🔘 Botones -->
+  <div class="botones-abajo">
+    <button onclick="reproducirAcepto()">ACEPTO</button>
+    <button onclick="reproducirNegado()">NEGADO</button>
+  </div>
+
+  <!-- 🧠 Script -->
+  <script>
+    function detenerTodos() {
+      let acepto = document.getElementById("audioAcepto");
+      let negado = document.getElementById("audioNegado");
+
+      acepto.pause();
+      acepto.currentTime = 0;
+
+      negado.pause();
+      negado.currentTime = 0;
+    }
+
+    function reproducirAcepto() {
+      detenerTodos();
+      document.getElementById("audioAcepto").play();
+    }
+
+    function reproducirNegado() {
+      detenerTodos();
+      document.getElementById("audioNegado").play();
+    }
+  </script>
+
+</body>
+</html>

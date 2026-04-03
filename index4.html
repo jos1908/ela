@@ -1,0 +1,152 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <title>Para ti 🤍</title>
+
+  <style>
+    body {
+      margin: 0;
+      padding: 0;
+      background: black;
+      overflow: hidden;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      height: 100vh;
+      color: white;
+      text-align: center;
+      font-family: 'Segoe UI', sans-serif;
+      flex-direction: column;
+    }
+
+    /* ☁️ BOTÓN NUBE */
+    .nube {
+      background: white;
+      color: black;
+      padding: 20px 40px;
+      border-radius: 50px;
+      font-size: 20px;
+      cursor: pointer;
+      box-shadow: 0 0 20px rgba(255,255,255,0.5);
+      transition: 0.3s;
+    }
+
+    .nube:hover {
+      transform: scale(1.1);
+    }
+
+    /* 💬 TEXTO */
+    .frase {
+      font-size: 40px;
+      font-style: italic;
+      max-width: 80%;
+      line-height: 1.5;
+      margin-top: 30px;
+      display: none;
+    }
+
+    /* 🤍 CORAZONES */
+    .corazon {
+      position: fixed;
+      bottom: -50px;
+      color: #ffffff;
+      font-size: 20px;
+      animation: subir 6s linear infinite;
+      opacity: 0.8;
+    }
+
+    @keyframes subir {
+      0% {
+        transform: translateY(0) scale(1);
+        opacity: 0.8;
+      }
+      100% {
+        transform: translateY(-110vh) scale(1.5);
+        opacity: 0;
+      }
+    }
+  </style>
+</head>
+
+<body>
+
+  <!-- ☁️ BOTÓN -->
+  <div class="nube" onclick="iniciarTodo()">
+    ☁️ Toca aquí
+  </div>
+
+  <!-- 💬 TEXTO -->
+  <div class="frase" id="texto"></div>
+
+  <!-- 🎵 MÚSICA -->
+  <audio id="musica" src="musica4.mp3" loop></audio>
+
+  <script>
+    const frase = "SIENDO HONESTO A MI SIEMPRE ME GUSTÓ ESTAR SOLO, HASTA QUE LLEGASTE TU Y AHORA CADA VEZ QUE ESTOY SOLO.. MUERO POR ESTAR CONTIGO🤍";
+    let i = 0;
+    let iniciado = false;
+
+    function iniciarTodo() {
+      if (iniciado) return;
+      iniciado = true;
+
+      // ocultar botón
+      document.querySelector(".nube").style.display = "none";
+
+      // mostrar texto
+      document.getElementById("texto").style.display = "block";
+
+      escribir();
+      iniciarMusica();
+      iniciarCorazones();
+    }
+
+    // ✍️ EFECTO ESCRITURA
+    function escribir() {
+      if (i < frase.length) {
+        document.getElementById("texto").innerHTML += frase.charAt(i);
+        i++;
+        setTimeout(escribir, 120);
+      }
+    }
+
+    // 🎵 FADE IN
+    function iniciarMusica() {
+      const musica = document.getElementById("musica");
+      musica.volume = 0;
+      musica.play();
+
+      let volumen = 0;
+      let subir = setInterval(() => {
+        if (volumen < 1) {
+          volumen += 0.02;
+          musica.volume = volumen;
+        } else {
+          clearInterval(subir);
+        }
+      }, 200);
+    }
+
+    // 🤍 CORAZONES
+    function iniciarCorazones() {
+      setInterval(() => {
+        const corazon = document.createElement("div");
+        corazon.classList.add("corazon");
+        corazon.innerHTML = "🤍";
+
+        corazon.style.left = Math.random() * 100 + "vw";
+        corazon.style.fontSize = (Math.random() * 20 + 10) + "px";
+        corazon.style.animationDuration = (Math.random() * 3 + 3) + "s";
+
+        document.body.appendChild(corazon);
+
+        setTimeout(() => {
+          corazon.remove();
+        }, 6000);
+      }, 300);
+    }
+  </script>
+
+</body>
+</html>
